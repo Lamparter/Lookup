@@ -162,16 +162,19 @@ export async function getEmojiMap() {
 
 /* ---------- Assembly ---------- */
 
-// Built-in profile fields that are rendered in the header or deliberately withheld.
-const HEADER_FIELDS = new Set(["title", "pronouns", "real_name", "display_name", "name"]);
-const PRIVATE_FIELDS = new Set(["email", "phone"]);
+// "header" fields (title, pronunciation, city…) belong to the identity block, not a section of their own.
+// "contact" holds phone/email-style fields, which are never published.
+const SKIPPED_SECTIONS = new Set(["header", "contact"]);
+// Defence in depth: contact details can also live in custom fields with arbitrary names.
+const PRIVATE_FIELD = /phone|mobile|e-?mail|address|postal|zip/i;
 
 function avatarOf(p: RawProfile) {
   return p.image_1024 ?? p.image_512 ?? p.image_original ?? p.image_192 ?? p.image_72 ?? "";
 }
 
 function displayName(u: RawUser) {
-  return u.profile.display_name || u.profile.real_name || u.name;
+  // Slack's profile panel leads with the full name, not the display name.
+  return u.profile.real_name || u.profile.display_name || u.name;
 }
 
 async function managerCard(id: string): Promise<ManagerCard | null> {
@@ -214,16 +217,16 @@ export async function getProfile(id: string): Promise<Profile | null> {
 
   await Promise.all(
     team.fields.map(async (f) => {
-      if (f.is_hidden) return;
-      const name = f.field_name?.toLowerCase();
-      if (name && (HEADER_FIELDS.has(name) || PRIVATE_FIELDS.has(name))) return;
+      if (f.is_hidden || f.type === "file") return;
+      if (PRIVATE_FIELD.test(f.field_name ?? "") || PRIVATE_FIELD.test(f.label)) return;
+      const section = (f.section_id && sectionsById.get(f.section_id)) || DEFAULT_SECTION;
+      if (section.is_hidden || SKIPPED_SECTIONS.has(section.section_type)) return;
+
       const raw = values[f.id];
       if (!raw) return;
       const value = await toValue(f, raw);
       if (!value) return;
 
-      const section = (f.section_id && sectionsById.get(f.section_id)) || DEFAULT_SECTION;
-      if (section.is_hidden) return;
       const bucket = grouped.get(section.id) ?? { section, fields: [] };
       bucket.fields.push({ order: f.ordering, field: { id: f.id, label: f.label, value } });
       grouped.set(section.id, bucket);
