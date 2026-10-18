@@ -5,8 +5,8 @@ import "./globals.css";
 const lato = Lato({ subsets: ["latin", "latin-ext"], weight: ["400", "700", "900"], variable: "--font-lato" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://contacts.lamparter.dev"),
-  title: { default: "Contacts", template: "%s · Contacts" },
+  metadataBase: new URL("https://lookup.lamparter.dev"),
+  title: { default: "Lookup", template: "%s" },
   description: "Hack Club Slack profiles, on the web.",
 };
 

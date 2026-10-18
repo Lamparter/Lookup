@@ -152,9 +152,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 49px;
+  height: 52px;
   padding: 0 8px 0 16px;
-  margin-top: 8px;
 }
 
 .panel-header h1 {
@@ -186,14 +185,14 @@ button {
 /* ---------- Identity block ---------- */
 
 .identity {
-  padding: 16px 16px 16px;
+  padding: 14px 16px 16px;
 }
 
 .avatar {
   display: block;
   width: 256px;
   height: 256px;
-  margin: 0 auto 24px;
+  margin: 0 auto 12px;
   border-radius: 12px;
   object-fit: cover;
   background: var(--tile);
@@ -225,14 +224,14 @@ button {
 }
 
 .title {
-  margin: 2px 0 0;
+  margin: 1px 0 0;
   font-size: 18px;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
 
 .pronouns {
-  margin: 0;
+  margin: 2px 0 0;
   font-size: 15px;
   line-height: 1.46668;
 }
@@ -240,8 +239,8 @@ button {
 .meta {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 26px;
+  gap: 16px;
+  margin-top: 16px;
 }
 
 .meta-line {
@@ -273,7 +272,7 @@ button {
 .actions {
   display: flex;
   gap: 8px;
-  margin-top: 22px;
+  margin-top: 20px;
 }
 
 .btn {
@@ -356,7 +355,7 @@ button {
 
 .section {
   border-top: 1px solid var(--divider);
-  padding: 20px 16px 20px;
+  padding: 17px 16px 20px;
 }
 
 .section h2 {
@@ -380,7 +379,7 @@ button {
 }
 
 .field-value {
-  margin: 2px 0 0;
+  margin: 0;
   font-size: 15px;
   line-height: 1.46668;
   overflow-wrap: anywhere;
@@ -407,7 +406,7 @@ button {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 6px;
+  margin-top: 10px;
   color: inherit;
 }
 

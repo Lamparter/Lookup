@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 
-const API = "https://slack.com/api/";
+const API = process.env.SLACK_API_URL ?? "https://slack.com/api/";
 const PROFILE_TTL = 300;
 
 export class SlackError extends Error {

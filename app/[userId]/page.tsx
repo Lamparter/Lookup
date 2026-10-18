@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getProfile } from "@/lib/slack";
 import { getEmojiResolver } from "@/lib/emoji";
 import ProfileView from "@/components/ProfileView";
@@ -44,6 +44,7 @@ export default async function ProfilePage({ params }: Props) {
   const { userId } = await params;
   const id = userId.toUpperCase();
   if (!USER_ID.test(id)) notFound();
+  if (id !== userId) permanentRedirect(`/${id}`);
 
   const [profile, resolve] = await Promise.all([getProfile(id), getEmojiResolver()]);
   if (!profile) notFound();

@@ -1,5 +1,5 @@
 {
-  "name": "contacts",
+  "name": "lookup",
   "private": true,
   "scripts": {
     "dev": "next dev",
